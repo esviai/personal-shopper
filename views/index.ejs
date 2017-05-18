@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>P.S. I love you</title>
-    <% include ./partials/header.ejs %>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col s12">
-          <h1 class="center">Personal Shopper</h1>
-        </div>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>P.S. I love you</title>
+  <% include ./partials/header.ejs %>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="center">Personal Shopper</h1>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col s6 offset-s3 center">
-          <% if (!hasAccess) { %> 
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s6 offset-s3 center">
+        <% if (!hasAccess) { %>
           <h5>You need to login first.</h5>
           <% } %>
-          <% if (error) { %>
-          <p><%= error %></p>
-          <% } %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s6 offset-s3 center">    
-          <form action="" method="post">
-            <input type="text" name="username" placeholder="username" required>
-            <br/>
-            <input type="password" name="password" placeholder="password" required>
-            <br/>
-            <button type="submit" class="btn-large">Login</button>
-          </form>
-          <br/>
-          <a href="/registration">I'm a new user</a>
-        </div>
+            <% if (error) { %>
+              <p>
+                <%= error %>
+              </p>
+              <% } %>
       </div>
     </div>
-    <!-- jQuery -->
-    <script type="text/javascript">
-    </script>
-  </body>
+    <div class="row">
+      <div class="col s6 offset-s3 center">
+        <form action="/" method="post">
+          <input type="text" name="username" placeholder="username" required>
+          <br/>
+          <input type="password" name="password" placeholder="password" required>
+          <br/>
+          <button type="submit" class="btn-large">Login</button>
+        </form>
+        <br/>
+        <a href="/registration">I'm a new user</a>
+      </div>
+    </div>
+  </div>
+  <% include ./partials/footer.ejs %>
+</body>
+
 </html>

@@ -3,10 +3,11 @@ var router = express.Router();
 const db = require('../models');
 
 router.use(function(req,res,next) {
-  let loginPage=[];
+  let loginPage=['/c/search','/c/checkout'];
   let currRoute = req.path;
+  console.log(currRoute);
   if (loginPage.includes(currRoute)) {
-    req.session.user ? next() : res.render('/',{hasAccess: false, error: null});
+    req.session.user ? next() : res.render('index',{hasAccess: false, error: null});
   }
   else {
     next();
@@ -27,8 +28,8 @@ router.post('/',function(req,res,next) {
     .then (user => {
       if (user.password === password) {
         req.session.user = {username:username, role:user.role};
-        if (user.role === "seller") res.redirect('/portal');
-        else res.redirect('/search');
+        if (user.role === "seller") res.redirect('/s/portal');
+        else res.redirect('/c/search');
       }
       else {
         res.render('index', {hasAccess: true, error: "Username or password is incorrect"});
@@ -59,6 +60,38 @@ router.post('/registration',function(req,res,next) {
       res.render('userCreate',{regError: err.message});
     });
 });
+
+// CUSTOMER SIDE //
+router.get('/c', function(req,res,next) {
+  res.redirect('/c/search');
+});
+
+router.get('/c/search', function(req, res, next) {
+  //db.item.findAll()
+  //   .then(items => {
+  //          res.render('homeCust',{items: items});
+  //        });
+  res.render('homeCust');
+});
+
+router.get('/c/checkout', function(req, res, next) {
+  res.send('This is the checkout page');
+});
+
+
+// SELLER SIDE //
+router.get('/s', function(req,res,next) {
+  res.redirect('/s/portal');
+});
+
+router.get('/s/portal', function(req, res, next) {
+  //db.item.findAll()
+  //  .then(items => {
+  //    res.render('homeSell',{items: items});
+  //  });
+  res.render('homeSell');
+});
+
 
 // LOGOUT //
 router.get('/doLogout',function(req,res,next) {
