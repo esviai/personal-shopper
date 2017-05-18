@@ -1,0 +1,82 @@
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+			<!-- Compiled and minified CSS -->
+		  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+		  <!-- Compiled and minified JavaScript -->
+			<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+			<title>Form Admin</title>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </head>
+
+    <body>
+
+		  <div class="navbar-fixed">
+				<nav>
+					<div class="nav-wrapper">
+						<a href="#!" class="brand-logo">Logo</a>
+						<ul class="right hide-on-med-and-down">
+							<li><a href="" class="waves-effect waves-light btn">Home</a></li>
+							<li><a href="" class="waves-effect waves-light btn">Add Item</a></li>
+							<li><a href="" class="waves-effect waves-light btn">Recap</a></li>
+							<li><a href="" class="waves-effect waves-light btn">Logout</a></li>
+						</ul>
+					</div>
+				</nav>
+		  </div>
+
+			<h2>Update Item</h1>
+				<div class="row">
+			    <form class="col s12" action="" method="post">
+			      <div class="row">
+			        <div class="input-field col s5">
+			          <input placeholder="Item Name" name="name" type="text" class="validate">
+			        </div>
+			      </div>
+			      <div class="row">
+			        <div class="input-field col s5">
+			          <input placeholder="Item Price" name="price" type="text" class="validate">
+			        </div>
+			      </div>
+			      <div class="row">
+							<div class="input-field col s5">
+			          <input placeholder="Category" name="category" type="text" class="validate">
+			        </div>
+			      </div>
+						<div class="row">
+							<div class="input-field col s5">
+			          <input placeholder="Stock" name="stock" type="text" class="validate">
+			        </div>
+			      </div>
+						<div class="row">
+							<div class="input-field col s5">
+			          <input placeholder="Description" name="description" type="text" class="validate">
+			        </div>
+			      </div>
+						<a href="" class="waves-effect waves-light btn" name="submit">button</a>
+			    </form>
+			  </div>
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+		<script type="text/javascript">
+			$(document).ready(function() {
+			$('select').material_select();
+			});
+		</script>
+  </html>
