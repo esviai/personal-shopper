@@ -79,18 +79,16 @@ router.get('/c/buyitem/:id', function(req,res,next) {
     .then (user => {
       let userId = user.id;
       let itemId = parseInt(req.params.id);
-      console.log("====================",userId);
-      console.log("=====================",itemId);
       db.usersitem.create({'userId':userId,'itemId':itemId})
         .then (() => {
           db.item.findAll()
             .then (items => {
-              res.redirect('/c');
               //res.render('homeCust',{'items':items});
               db.item.findById(itemId)
                 .then (item => {
                   let newStock = item.stock - 1;
                   db.item.update({'stock': newStock},{where:{'id':itemId}});
+                  res.redirect('/c');
                 });
             });
         });
