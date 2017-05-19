@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ./partials/header.ejs %>
+    <title>Add item | Personal Shopper</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h1 class="center">Personal Shopper</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col s6 offset-s3 center">
+          <form action="" method="post">
+            <input type="text" name="image" placeholder="Image URL (please input the correct one" required>
+            <br/>
+            <input type="text" name="name" placeholder="Name">
+            <br/>
+            <input type="text" name="category" placeholder="Category">
+            <br/>
+            <input type="number" min=0 name="price" placeholder="Price">
+            <br/>
+            <input type="number" min=1 name="stock" placeholder="Stock">
+            <br/>
+            <input type="text" name="description" placeholder="Description">
+            <br/>
+            <button type="submit" class="btn-large">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% include ./partials/footer.ejs %>
+  </body>
+</html>

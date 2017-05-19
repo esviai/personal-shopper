@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <% include ./partials/header.ejs %>
+    <title>Items | Personal Shopper</title>
+  </head>
+
+  <body>
+    <% include ./partials/navbarSell.ejs %>
+    <br/>
+    <br/>
+    <div class="container">
+      <div class="row">
+        <div class="col s6 center">
+          <a href="/s/dayrecap" class="waves-effect waves-light btn-large disabled">Recap/Day</a>
+        </div>
+        <div class="col s6 center">
+          <a href="/s/custrecap" class="waves-effect waves-light btn-large">Recap/Customer</a>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <table class="striped responsive-table centered">
+            <thead>
+              <tr>
+                <th>No. </th>
+                <th>Item</th>
+                <th>Name</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% let num = 1 %>
+              <% items.forEach( item => { %>
+              <tr>
+                <th class="center-align"><%= num %></th>
+                <% num += 1 %>
+                <th class="center-align"><img src="<%- item.image %>" alt="" style="height: 100px"></th>
+                <th class="center-align"><%= item.name %></th>
+                <th class="center-align"><%= countItem[num-2] %></th>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+   <!-- jQuery -->
+    <script type="text/javascript">
+    </script>
+  </body>
+
+</html>

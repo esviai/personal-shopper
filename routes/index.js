@@ -67,10 +67,6 @@ router.get('/c', function(req,res,next) {
 });
 
 router.get('/c/search', function(req, res, next) {
-  //db.item.findAll()
-  //   .then(items => {
-  //          res.render('homeCust',{items: items});
-  //        });
   res.render('homeCust');
 });
 
@@ -85,15 +81,77 @@ router.get('/s', function(req,res,next) {
 });
 
 router.get('/s/portal', function(req, res, next) {
-  //db.item.findAll()
-  //  .then(items => {
-  //    res.render('homeSell',{items: items});
-  //  });
-  res.render('homeSell');
+  db.item.findAll()
+    .then (items => {
+      res.render('homeSell', {'items':items});
+    });
 });
 
+router.get('/s/additem',function(req,res,next) {
+  res.render('itemCreate');
+});
 
-// LOGOUT //
+router.post('/s/additem',function(req,res,next) {
+  let inputItem = req.body;
+  inputItem.role = "customer";
+  db.item.create(inputItem)
+    .then((item) => {
+      res.redirect('/s/portal');
+    });
+});
+
+router.get('/s/updateitem/:id',function(req,res,next) {
+  let id = req.params.id;
+  db.item.findById(id)
+    .then (item => {
+      console.log(item);
+      res.render('itemUpdate', {'item':item});
+    });
+});
+
+router.post('/s/updateitem/:id', function (req,res,next) {
+  let id = req.params.id;
+  let updateItem = req.body;
+  db.item.update(updateItem,{where: {id:id}})
+    .then (item => {
+      res.redirect('/s/portal');
+    });
+});
+
+router.get('/s/deleteitem/:id', function (req,res,next) {
+  let id = req.params.id;
+  //CHECK RELATIONNYA OTOMATIS KE DELETE JUGA ATAU NGGAK
+  db.item.destroy({
+    where: {id:id}
+  })
+    .then (() => {
+      res.redirect('/s/portal');
+    });
+});
+
+//// Recap ////
+router.get('/s/dayrecap/', function (req,res,next) {
+  var countItem = [];
+  var itemsR = {};
+  // db.item.findAndCountAll({include: [{model: db.usersitem}]})
+  //   .then (result => {
+  //     console.log(result);
+  //     res.render('recapDay', {'items':items, 'countItem':countItem});
+  //   });
+  db.item.findAll()
+    .then (items => {
+      items.forEach(item => {
+        db.usersitem.count({where: {'item_id':item.id}})
+          .all(total => {
+            countItem.push(total);
+            //console.log(countItem);
+            res.render('recapDay', {'items':items, 'countItem':countItem});
+          });
+      });
+    });
+});
+
+//LOGOUT //
 router.get('/doLogout',function(req,res,next) {
   delete req.session.user;
   res.redirect('/');

@@ -8,33 +8,42 @@
 
   <body>
     <% include ./partials/navbarSell.ejs %>
+    <br/>
+    <br/>
     <div class="container">
       <div class="row">
         <div class="col s4">
-          <a class="waves-effect waves-light btn-large">Add Items</a>
+          <a href="/s/additem" class="waves-effect waves-light btn-large">Add Items</a>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
+        <% items.forEach(item => { %>
         <div class="col s4">
           <div class="card large sticky-action">
             <div class="card-image waves-effect waves-block waves-light">
-              <img class="activator" src="/images/Smurf.jpg">
+              <img class="activator" src="<%- item.image %>">
             </div>
             <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-              <p>Stock: </p>
+              <span class="card-title activator grey-text text-darken-4">
+                <%- item.name ? item.name : `Item ${item.id}` %> 
+                <i class="material-icons right">more_vert</i></span>
+              <p>Stock: <%- item.stock? item.stock : "~" %> </p>
             </div>
             <div class="card-action center">
-              <p><a href="" class=btn-large>Update</a> <a href="" class=btn-large>Delete</a></p>
+              <p><a href="/s/updateitem/<%-item.id%>" class=btn-large>Update</a> <a href="/s/deleteitem/<%- item.id %>" class=btn-large>Delete</a></p>
             </div>
             <div class="card-reveal">
-              <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-              <p>Here is some more information about this product that is only revealed once clicked on.</p>
+              <span class="card-title grey-text text-darken-4">
+                <%- item.name ? item.name : `Item ${item.id}` %>
+                <i class="material-icons right">close</i></span>
+              <p><%- item.category ? item.category : `` %></p>
+              <p><%- item.description ? item.description : `` %></p>
             </div>
           </div>
         </div>
+        <% }) %>
       </div>
     </div>
     <!-- jQuery -->
