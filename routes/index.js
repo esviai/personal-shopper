@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../models');
+const helper = require('../helpers/util.js');
 
 router.use(function(req,res,next) {
-  let loginPage=['/c/search','/c/checkout'];
+  let loginPage=['c','/c/search','/c/checkout','/s','/s/dayrecap'];
   let currRoute = req.path;
-  console.log(currRoute);
   if (loginPage.includes(currRoute)) {
     req.session.user ? next() : res.render('index',{hasAccess: false, error: null});
   }
@@ -67,7 +67,16 @@ router.get('/c', function(req,res,next) {
 });
 
 router.get('/c/search', function(req, res, next) {
-  res.render('homeCust');
+  db.item.findAll()
+    .then (items => {
+      res.render('homeCust', {'items':items});
+    });
+});
+
+router.get('/c/buyitem/:id', function(req,res,next) {
+  let id = req.params.id;
+  let user = req.session.user;
+  res.send('This is the checkout page');
 });
 
 router.get('/c/checkout', function(req, res, next) {
@@ -104,7 +113,6 @@ router.get('/s/updateitem/:id',function(req,res,next) {
   let id = req.params.id;
   db.item.findById(id)
     .then (item => {
-      console.log(item);
       res.render('itemUpdate', {'item':item});
     });
 });
@@ -130,25 +138,45 @@ router.get('/s/deleteitem/:id', function (req,res,next) {
 });
 
 //// Recap ////
-router.get('/s/dayrecap/', function (req,res,next) {
-  var countItem = [];
-  var itemsR = {};
-  // db.item.findAndCountAll({include: [{model: db.usersitem}]})
-  //   .then (result => {
-  //     console.log(result);
-  //     res.render('recapDay', {'items':items, 'countItem':countItem});
-  //   });
+router.get('/s/dayrecap', function (req,res,next) {
   db.item.findAll()
     .then (items => {
-      items.forEach(item => {
-        db.usersitem.count({where: {'item_id':item.id}})
-          .all(total => {
-            countItem.push(total);
-            //console.log(countItem);
-            res.render('recapDay', {'items':items, 'countItem':countItem});
-          });
+      let promises=[];
+      items.forEach( item => {
+        let promiseItem=new Promise((res,rej) => {
+          db.usersitem.count({where: {'itemId':item.id}})
+            .then (total => {
+              let obj = {item:item, total:total};
+              res(obj);
+            });
+        });
+        promises.push(promiseItem);
+      });
+      Promise.all(promises).then( _items => {
+        res.render('recapDay', {items: _items});
       });
     });
+});
+
+router.get('/s/custrecap', function(req,res,next) {
+  //  db.user.findAll()
+  //    .then (users => {
+  //      users.forEach(user => {
+  //        console.log(`====================================================`);
+  //        console.log(user)
+  //        user.getitems()
+  //          .then (() => {
+  //            console.log(`***************`)
+  //          });
+  //      });
+  //    });
+
+  //console.log(db.user.getitems());
+   db.user.findAll({include:{model:db.item}})
+      .then (users => {
+        console.log(users);
+      });
+  res.render('recapCust');
 });
 
 //LOGOUT //

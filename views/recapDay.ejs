@@ -41,9 +41,9 @@
               <tr>
                 <th class="center-align"><%= num %></th>
                 <% num += 1 %>
-                <th class="center-align"><img src="<%- item.image %>" alt="" style="height: 100px"></th>
-                <th class="center-align"><%= item.name %></th>
-                <th class="center-align"><%= countItem[num-2] %></th>
+                <th class="center-align"><img src="<%- item.item.image %>" alt="" style="height: 100px"></th>
+                <th class="center-align"><%= item.item.name %></th>
+                <th class="center-align"><%= item.total %></th>
               </tr>
               <% }) %>
             </tbody>
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-   <!-- jQuery -->
+    <!-- jQuery -->
     <script type="text/javascript">
     </script>
   </body>
