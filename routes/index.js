@@ -74,9 +74,27 @@ router.get('/c/search', function(req, res, next) {
 });
 
 router.get('/c/buyitem/:id', function(req,res,next) {
-  let id = req.params.id;
-  let user = req.session.user;
-  res.send('This is the checkout page');
+  let username = req.session.user.username;
+  db.user.find({where: {username:username}})
+    .then (user => {
+      let userId = user.id;
+      let itemId = parseInt(req.params.id);
+      console.log("====================",userId);
+      console.log("=====================",itemId);
+      db.usersitem.create({'userId':userId,'itemId':itemId})
+        .then (() => {
+          db.item.findAll()
+            .then (items => {
+              res.redirect('/c');
+              //res.render('homeCust',{'items':items});
+              db.item.findById(itemId)
+                .then (item => {
+                  let newStock = item.stock - 1;
+                  db.item.update({'stock': newStock},{where:{'id':itemId}});
+                });
+            });
+        });
+    });
 });
 
 router.get('/c/checkout', function(req, res, next) {
@@ -130,10 +148,13 @@ router.get('/s/deleteitem/:id', function (req,res,next) {
   let id = req.params.id;
   //CHECK RELATIONNYA OTOMATIS KE DELETE JUGA ATAU NGGAK
   db.item.destroy({
-    where: {id:id}
+    where: {'id':id}
   })
     .then (() => {
-      res.redirect('/s/portal');
+      db.usersitem.destroy({where: {'itemId':id}})
+        .then (() => {
+          res.redirect('/s/portal');
+        });
     });
 });
 
