@@ -4,7 +4,7 @@ const db = require('../models');
 const helper = require('../helpers/util.js');
 
 router.use(function(req,res,next) {
-  let loginPage=['c','/c/search','/c/checkout','/s','/s/dayrecap'];
+  let loginPage=['/c','/c/search','/c/checkout','/s','/s/portal','/s/dayrecap'];
   let currRoute = req.path;
   if (loginPage.includes(currRoute)) {
     req.session.user ? next() : res.render('index',{hasAccess: false, error: null});
