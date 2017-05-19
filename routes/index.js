@@ -51,7 +51,7 @@ router.post('/registration',function(req,res,next) {
   inputData.role = "customer";
   db.user.create(inputData)
     .then((user) => {
-      res.redirect('/search');
+      res.redirect('/c/search');
     })
     .catch(err => {
       if (err.message === "Validation error: Username already exists.") {
